@@ -1,15 +1,23 @@
+"use client";
+
 import Link from "next/link";
-import Image from "next/image";
-import style from "./style.module.css";
+import { readData } from "../server-action";
+import { useState, useEffect } from "react";
 
 export default function Other() {
+  const [data, setData] = useState("nodata");
+
+  useEffect(() => {
+    readData().then((res) => {
+      setData(res);
+    });
+  }, []);
+
   return (
     <main>
       <h1 className="title">Other page</h1>
-      <p className="msg">これは別のページです.</p>
-      <div>
-        <Image src="/sample.jpg" alt="画像です" width={200} height={200} />
-      </div>
+      <p className="msg">メッセージを保存しました.</p>
+      <pre className="m-5 p-2 border">{data}</pre>
       <div>
         <Link href="/">go back!!!</Link>
       </div>
